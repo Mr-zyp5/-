@@ -1,0 +1,22 @@
+{% import "common/employee_page.html" as pg %}
+{% extends "employee/index.html" %}
+{% block content %}
+<div class="span9">
+    <h1>
+        公告
+    </h1>
+    <h2>
+    </h2>
+    <ul class="messages">
+        {% for i in data.items %}
+        <li class="well">
+            <p class="message">
+                {{ i.message }}
+            </p>
+            <span class="meta">发布时间 <em>{{ i.pubtime }}</em> 发布人 <em>{{ i.author }}</em></span>
+        </li>
+        {% endfor %}
+    </ul>
+    {{ pg.page(data,'employee.noticedetail') }}
+</div>
+{% endblock %}

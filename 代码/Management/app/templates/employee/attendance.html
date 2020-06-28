@@ -1,0 +1,66 @@
+{% extends "employee/index.html" %}
+{% block content %}
+<div class="span9">
+    <form id="new-project" method="post" class="form-horizontal">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label" for="select01">月份</label>
+                <div class="controls">
+                    <select id="select01" name="month">
+                        {% for i in data %}
+                        <option value="{{ i.month }}">{{ i.month }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                {{ form.csrf_token }}
+                {{ form.submit }}
+            </div>
+        </fieldset>
+    </form>
+    {% if request.method=='POST' %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    迟到次数
+                </th>
+                <th>
+                    早退次数
+                </th>
+                <th>
+                    旷工天数
+                </th>
+                <th>
+                    请假天数
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {{ name }}
+                </td>
+                <td>
+                    {{ late_data }}
+                </td>
+                <td>
+                    {{ early_data }}
+                </td>
+                <td>
+                    {{ absen_days }}
+                </td>
+                <td>
+                    {{ days }}
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

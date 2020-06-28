@@ -1,0 +1,67 @@
+{% import "common/employee_page.html" as pg %}
+{% extends "employee/index.html" %}
+{% block content %}
+<div class="span9">
+    <form id="new-project" method="post" class="form-horizontal">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label" for="select01">月份</label>
+                <div class="controls">
+                    <select id="select01" name="month">
+                        {% for i in months %}
+                        <option value="{{ i.month }}">{{ i.month }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </fieldset>
+    </form>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    底薪
+                </th>
+                <th>
+                    奖金及补助
+                </th>
+                <th>
+                    五险一金
+                </th>
+                <th>
+                    扣款金额
+                </th>
+                <th>
+                    实发工资
+                </th>
+                <th>
+                    月份
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data.items %}
+            <tr>
+                <td>
+                    {{ employee.name }}
+                </td>
+                <td>{{ '%.2f' | format(i.base_salary) }}</td>
+                <td>{{ '%.2f' | format(i.grant) }}</td>
+                <td>{{ '%.2f' | format(i.insur_fund) }}</td>
+                <td>{{ '%.2f' | format(i.fine) }}</td>
+                <td>{{ '%.2f' | format(i.real_salary) }}</td>
+                <td>{{ i.month }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{{ pg.page(data,'employee.salarydtail') }}
+{% endblock %}

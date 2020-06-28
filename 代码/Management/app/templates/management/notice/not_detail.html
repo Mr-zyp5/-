@@ -1,0 +1,70 @@
+{%  extends "management/index.html"  %}
+
+{%  block myadmin_index  %}
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">公告详情</div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog"></a>
+                    </div>
+                </div>
+                <div class="widget-body am-fr">
+                    <form class="am-form tpl-form-line-form" method="post" enctype="multipart/form-data">
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">标题
+                                <span class="tpl-form-line-small-title">Title</span></label>
+                            <div class="am-u-sm-9">
+                                {{ notice.title }}
+                                </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">发布人
+                                <span class="tpl-form-line-small-title">Title</span></label>
+                            <div class="am-u-sm-9">
+                                {{ notice.author }}
+                                </div>
+                        </div>
+
+                        <div class="am-form-group">
+
+                            <label for="user-name" class="am-u-sm-3 am-form-label">内容
+                                <span class="tpl-form-line-small-title">Title</span></label>
+                            <div class="am-u-sm-9">
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="widget widget-purple am-cf">
+                                        {{ notice.message }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">类型
+                                <span class="tpl-form-line-small-title">Title</span></label>
+                            <div class="am-u-sm-9">
+                                {{ notice.user_type }}
+                                </div>
+                        </div>
+                       
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+
+                                <a href="{{ url_for('management.noticelist') }}">
+                                    <button class="am-btn am-btn-primary tpl-btn-bg-color-success" type="button">返回</button>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>
+
+
+{%  endblock  %}

@@ -1,0 +1,117 @@
+{% extends "employee/index.html" %}
+{% block content %}
+<div class="span9">
+    {% if post %}
+    <h3>
+        <p color="red">待处理</p>
+    </h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    请假原因
+                </th>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    日期
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in undata %}
+            <tr>
+                <td>
+                    {{ i.reason }}
+                </td>
+                <td>
+                    {{ i.leave_name }}
+                </td>
+                <td>
+                    {{ i.addtime }}
+                </td>
+                <td>
+                    <a href="{{ url_for('employee.deal_leave',id=i.id,agree=1) }}"><button class="btn btn-primary">同意</button></a>
+                    <a href="{{ url_for('employee.deal_leave',id=i.id,agree=0) }}"><button class="btn">拒绝</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    <h3>
+        请假记录
+    </h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    请假原因
+                </th>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    日期
+                </th>
+                <th>
+                    状态
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>
+                    {{ i.reason }}
+                </td>
+                <td>
+                    {{ i.leave_name }}
+                </td>
+                <td>
+                    {{ i.addtime }}
+                </td>
+                {% if i.status==1 %}
+                <td>
+                    已通过
+                </td>
+                {% elif i.status==0 %}
+                <td>
+                    未通过
+                </td>
+                {% else %}
+                <td>
+                    审核中
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="toggle-link" href="#new-project"><i class="icon-plus"></i> 我要请假</a>
+    <form id="new-project" method="post" class="form-horizontal hidden">
+        <fieldset>
+            <legend>请假条</legend>
+            <div class="control-group">
+                <label class="control-label" for="textarea">原因</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" name="reason" id="textarea" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">请假天数</label>
+                <div class="controls">
+                    <input type="text" name="day" class="input-xlarge" id="input01">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

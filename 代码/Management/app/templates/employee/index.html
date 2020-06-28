@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="cn">
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}首页{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../../static/employee/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../../static/employee/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="../../static/employee/css/site.css" rel="stylesheet">
+		<!--[if lt IE 9]><script src="../../static/employee/js/html5.js"></script><![endif]-->
+	</head>
+	<body>
+		<div class="container">
+            <!-- 页头开始 -->
+			<div class="navbar">
+				<div class="navbar-inner">
+					<div class="container">
+						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="../../static/employee/#">管理系统</a>
+						<div class="nav-collapse">
+							<ul class="nav">
+								<li class="active">
+									<a href="{{ url_for('employee.index') }}">首页</a>
+								</li>
+
+							</ul>
+							<ul class="nav pull-right">
+
+								<li>
+									<a href="{{url_for('employee.logout')}}">退出</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div><!-- 页头结束-->
+			
+            
+            <div class="row">
+				<div class="span3">
+                    <!-- 侧边导航开始 -->
+					<div class="well" style="padding: 8px 0;">
+						<ul class="nav nav-list">
+							<li class="nav-header">
+								导航栏
+							</li>
+							<li class="active">
+								<a href="{{ url_for('employee.index') }}"><i class="icon-white icon-home"></i> 首页</a>
+							</li>
+                            <li class="nav-header">
+								会员管理
+							</li>
+							<li>
+								<a href="{{ url_for('employee.personal') }}"><i class="icon-user"></i> 个人信息</a>
+							</li>
+							<li>
+								<a href="{{ url_for('employee.attendtail') }}"><i class="icon-check"></i> 考勤信息</a>
+							</li>
+							<li>
+								<a href="{{ url_for('employee.noticedetail') }}"><i class="icon-envelope"></i> 公告</a>
+							</li>
+							<li>
+								<a href="{{ url_for('employee.salarydtail') }}"><i class="icon-file"></i> 工资信息</a>
+							</li>
+						</ul>
+					</div><!-- 侧边导航结束 -->
+				</div>
+                {% block content %}
+				<div class="span9">
+                    <!-- 主体开始 -->
+					<div class="hero-unit">
+						<h1>
+							Welcome!
+						</h1>
+						<p>
+							{% if is_sign==0 %}
+							<a href="{{ url_for('employee.sign_in',status=1) }}" class="btn btn-primary btn-large">签到</a>
+							{% elif is_sign==1 %}
+							<a href="{{ url_for('employee.sign_in',status=2) }}" class="btn btn-large">签退</a>
+							{% else %}
+							<span>下班了，请好好休息</span>
+							{% endif %}
+						</p>
+					</div>
+					<div class="well summary">
+						<ul>
+							<li>
+								<a href="{{ url_for('employee.personal') }}"> 完善个人信息</a>
+							</li>
+							<li>
+								<a href="{{ url_for('employee.noticedetail') }}"><span class="count">{{ notice_count }}</span> 查看公告</a>
+							</li>
+							<li>
+								<a href="{{ url_for('employee.leave') }}">
+									{% if post %}
+									<span style="color: red">{{ leave_count }}条申请待处理</span><br/>
+									{% endif %}
+									请假
+								</a>
+							</li>
+							<li>
+								<a href="{{ url_for('employee.attendtail') }}"> 考勤信息</a>
+							</li>
+						</ul>
+					</div>
+                    <!-- 主体结束 -->
+				</div>
+                {% endblock %}
+			</div>
+		</div>
+		<script src="../../static/employee/js/jquery.min.js"></script>
+		<script src="../../static/employee/js/bootstrap.min.js"></script>
+		<script src="../../static/employee/js/site.js"></script>
+	</body>
+</html>

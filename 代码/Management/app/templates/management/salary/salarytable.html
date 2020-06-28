@@ -1,0 +1,85 @@
+{% import "common/manage_page.html" as pg %}
+{% extends 'management/index.html' %}
+
+{% block myadmin_index %}
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">工资列表</div>
+
+
+                </div>
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                            <div class="am-form-group tpl-table-list-select">
+
+
+                            </div>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                            <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                <input type="text" value="" name="keyword" class="am-form-field" placeholder="员工工号/结算月份">
+                                <span class="am-input-group-btn">
+                                    <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                             <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>工号</th>
+                                    <th>底薪</th>
+                                    <th>奖金及其他补助</th>
+                                    <th>五险一金</th>
+                                    <th>其他扣款</th>
+                                    <th>结算月份</th>
+                                    <th>日期</th>
+                                    <th>操作</th>
+                                </tr>
+                             </thead>
+                            <tbody>
+                                {% for i in data.items %}
+                                <tr class="gradeX">
+                                    <td>{{ i.id }}</td>
+                                    <td>{{ i.work_id }}</td>
+                                    <td>{{ '%.2f' | format(i.base_salary) }}</td>
+                                    <td>{{ '%.2f' | format(i.grant) }}</td>
+                                    <td>{{ '%.2f' | format(i.insur_fund) }}</td>
+                                    <td>{{ '%.2f' | format(i.fine) }}</td>
+                                    <td>{{ i.month }}</td>
+                                    <td>{{ i.addtime }}</td>
+                                    <td>
+                                        <a href="{{ url_for('management.del_sal', id=i.id ) }}" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                    </td>
+                                </tr>
+                                <!-- more data -->
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {{ pg.page(data,'management.emplist') }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
