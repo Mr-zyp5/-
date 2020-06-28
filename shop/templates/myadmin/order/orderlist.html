@@ -1,0 +1,109 @@
+{%  extends "myadmin/index.html"  %}
+
+{%  block myadmin_index  %}
+ <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">用户列表</div>
+
+
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>序号</th>
+                                                <th>状态</th>
+                                                <th>名字</th>
+                                                <th>金额</th>
+<!--                                                <th>性别</th>-->
+<!--                                                <th>年龄</th>-->
+<!--&lt;!&ndash;                                                <th>状态</th>&ndash;&gt;-->
+<!--                                                <th>添加时间</th>-->
+<!--                                                <th>头像</th>-->
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        {% for i in orderobj %}
+                                        <tr class="gradeX">
+                                            <td>{{ i.id }}</td>
+                                            <td class="db1" id="{{i.id}}"><span>{{ i.status }}</span></td>
+                                            <td>
+                                                {{i.name}}
+                                            </td>
+                                            <td class="db2" tid="{{i.id}}"><span>{{ i.total }}</span></td>
+                                            <td>
+                                                <div class="tp1-table-black-operation">
+                                                    <a href="">
+                                                        <i class="am-icon-pencil"></i>编辑
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                    <script type="text/javascript">
+                                        $('.db1').dblclick(function(){
+                                            var sp = $(this).find('span')
+                                            var id = $(this).attr('id')
+                                            var val = $(this).find('span').text()
+                                            var inp = $('<input type="text" class="inp" value='+val+'>')
+                                            inp.css('color','#000')
+                                            $(this).find('span').html(inp)
+                                            inp.blur(function(){
+                                                var newval = $(this).val()
+                                                if(newval==val){
+                                                    $(this).parent().html(val)
+                                                }else{
+                                                    $.get('{% url 'myadmin_editorder' %}',{id:id,name:newval},function(data){
+                                                        if(data['msg']==1){
+                                                            alert('ok')
+                                                            sp.parent().html(newval)
+                                                        }else{
+                                                            sp.parent().html(val)
+                                                            alert('修改失败')
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                            })
+                                            $('.db2').dblclick(function(){
+                                            var sp = $(this).find('span')
+                                            var id = $(this).attr('tid')
+                                            var val = $(this).find('span').text()
+                                            var inp = $('<input type="text" class="inp" value='+val+'>')
+                                            inp.css('color','#000')
+                                            $(this).find('span').html(inp)
+                                            inp.blur(function(){
+                                                var newval = $(this).val()
+                                                if(newval==val){
+                                                    $(this).parent().html(val)
+                                                }else{
+                                                    $.get('{% url 'myadmin_editorder' %}',{id:id,name:newval},function(data){
+                                                        if(data['msg']==1){
+                                                            alert('ok')
+                                                            sp.parent().html(newval)
+                                                        }else{
+                                                            sp.parent().html(val)
+                                                            alert('修改失败')
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                            })
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%  endblock  %}
+

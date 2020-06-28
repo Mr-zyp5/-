@@ -1,0 +1,110 @@
+{%  extends "myadmin/index.html"  %}
+
+{%  block myadmin_index  %}
+ <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">用户列表</div>
+
+
+                            </div>
+                            <div class="widget-body  am-fr">
+
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a href="{% url 'myadmin_addcate' %}"><button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+<!--                                                <th>序号</th>-->
+<!--                                                <th>用户名</th>-->
+<!--                                                <th>状态</th>-->
+<!--                                                <th>手机号</th>-->
+<!--                                                <th>性别</th>-->
+<!--                                                <th>年龄</th>-->
+<!--&lt;!&ndash;                                                <th>状态</th>&ndash;&gt;-->
+<!--                                                <th>添加时间</th>-->
+<!--                                                <th>头像</th>-->
+<!--                                                <th>操作</th>-->
+                                            </tr>
+                                        </thead>
+                                        {% for i in cates %}
+                                        <tr class="gradeX">
+                                            <td>{{ i.id }}</td>
+                                            <td class="db1" id="{{i.id}}">{{ i.newname }} <span>{{i.name}}</span></td>
+                                            <td>
+                                                {{i.upid}}
+                                            </td>
+                                            <td>{{ i.paths }}</td>
+                                            <td>
+                                                <div class="tp1-table-black-operation">
+                                                    <a href="">
+                                                        <i class="am-icon-pencil"></i>编辑
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="delcate" class="tp1-table-black-operation-del" pid="{{i.id}}">
+                                                        <i class="am-icon-trash"></i>删除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                    <script type="text/javascript">
+                                        $('.delcate').click(function(){
+                                            var pid = $(this).attr('pid')
+                                            var el = $(this).parents('tr')
+                                            $.get('{% url 'myadmin_delcate' %}',{pid:pid},function(data){
+                                                if(data['msg']==0){
+                                                    alert('当前分类下有子类，不能删除')
+                                                }else if(data['msg']==1){
+                                                    el.remove()
+                                                }
+                                            },'json')
+                                        })
+                                        $('.db1').dblclick(function(){
+                                            var sp = $(this).find('span')
+                                            var id = $(this).attr('id')
+                                            var val = $(this).find('span').text()
+                                            var inp = $('<input type="text" class="inp" value='+val+'>')
+                                            inp.css('color','#000')
+                                            $(this).find('span').html(inp)
+                                            inp.blur(function(){
+                                                var newval = $(this).val()
+                                                if(newval==val){
+                                                    $(this).parent().html(val)
+                                                }else{
+                                                    $.get('{% url 'myadmin_editcate' %}',{id:id,name:newval},function(data){
+                                                        if(data['msg']==1){
+                                                            alert('ok')
+                                                            sp.parent().html(newval)
+                                                        }else{
+                                                            sp.parent().html(val)
+                                                            alert('修改失败')
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                            })
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%  endblock  %}
+
